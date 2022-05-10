@@ -15,15 +15,15 @@ module.exports = router;
 router.get('/', auth, stuffCtrl.getAll);
 
 //récupérer un objet spécifique
-router.post('/', auth, multer, stuffCtrl.createThing);
+router.post('/', auth, multer, stuffCtrl.createSauce);
 
 //mettre à jour un objet spécifique
-router.get('/:id', auth, stuffCtrl.getOneThing);
+router.get('/:id', auth, stuffCtrl.getOneSauce);
 
 //supprimer un objet spécifique
-router.put('/:id', auth, multer, stuffCtrl.modifyThing);
+router.put('/:id', auth, multer, stuffCtrl.modifySauce);
 
 //récupérer l'ensemble des objets en BDD
-router.delete('/:id', auth, stuffCtrl.deleteThing);
+router.delete('/:id', auth, stuffCtrl.deleteSauce);
 
 module.exports = router;

@@ -10,7 +10,7 @@ const userRoutes = require('./routes/user');
 app.use(express.json());
 
 //connexion a la base mongo db
-mongoose.connect('mongodb+srv://root:root@cluster0.9zacl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://root:root@cluster0.9zacl.mongodb.net/HotTakes?retryWrites=true&w=majority',
     { useNewUrlParser: true,
         useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -27,6 +27,6 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //utilisation du router en ajoutant la base de l'url qui s'ajoutera devant les url défini dans routes/stuff.js
-app.use('/api/stuff', stuffRoutes);
+app.use('/api/sauces', stuffRoutes);
 app.use('/api/auth', userRoutes);
 module.exports = app;
