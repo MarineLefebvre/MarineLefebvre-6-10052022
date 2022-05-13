@@ -11,19 +11,26 @@ const stuffCtrl = require('../controllers/stuff');
 
 module.exports = router;
 
-//Insérer un objet en base de données
+//Différence entre GET et POST :
+//GET : transporte params dans url => ex /:id
+//POST : transporte param dans le body
+
+//récupérer tout les éléments
 router.get('/', auth, stuffCtrl.getAll);
 
-//récupérer un objet spécifique
+//Insérer un objet en base de données
 router.post('/', auth, multer, stuffCtrl.createSauce);
 
-//mettre à jour un objet spécifique
+//récupérer un objet spécifique
 router.get('/:id', auth, stuffCtrl.getOneSauce);
 
-//supprimer un objet spécifique
+//mettre à jour un objet spécifique
 router.put('/:id', auth, multer, stuffCtrl.modifySauce);
 
-//récupérer l'ensemble des objets en BDD
+//supprimer un objet spécifique
 router.delete('/:id', auth, stuffCtrl.deleteSauce);
+
+//mettre à jour like et dislike
+router.post('/:id/like', auth, multer, stuffCtrl.likeSauce);
 
 module.exports = router;
