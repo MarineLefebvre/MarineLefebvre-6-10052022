@@ -31,6 +31,6 @@ router.put('/:id', auth, multer, stuffCtrl.modifySauce);
 router.delete('/:id', auth, stuffCtrl.deleteSauce);
 
 //mettre à jour like et dislike
-router.post('/:id/like', auth, multer, stuffCtrl.likeSauce);
+router.post('/:id/like', auth, stuffCtrl.likeSauce);
 
 module.exports = router;
