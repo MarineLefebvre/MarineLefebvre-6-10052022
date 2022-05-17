@@ -7,7 +7,7 @@ const auth = require('../middleware/auth')
 
 const multer = require('../middleware/multer-config');
 
-const stuffCtrl = require('../controllers/stuff');
+const sauceCtrl = require('../controllers/sauceController');
 
 module.exports = router;
 
@@ -16,21 +16,21 @@ module.exports = router;
 //POST : transporte param dans le body
 
 //récupérer tout les éléments
-router.get('/', auth, stuffCtrl.getAll);
+router.get('/', auth, sauceCtrl.getAll);
 
 //Insérer un objet en base de données
-router.post('/', auth, multer, stuffCtrl.createSauce);
+router.post('/', auth, multer, sauceCtrl.createSauce);
 
 //récupérer un objet spécifique
-router.get('/:id', auth, stuffCtrl.getOneSauce);
+router.get('/:id', auth, sauceCtrl.getOneSauce);
 
 //mettre à jour un objet spécifique
-router.put('/:id', auth, multer, stuffCtrl.modifySauce);
+router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 
 //supprimer un objet spécifique
-router.delete('/:id', auth, stuffCtrl.deleteSauce);
+router.delete('/:id', auth, sauceCtrl.deleteSauce);
 
 //mettre à jour like et dislike
-router.post('/:id/like', auth, stuffCtrl.likeSauce);
+router.post('/:id/like', auth, sauceCtrl.likeSauce);
 
 module.exports = router;
