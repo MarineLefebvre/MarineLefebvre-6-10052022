@@ -103,10 +103,5 @@ dist
 # TernJS port file
 .tern-port
 
-# images
-images/*
-# on garde quand même le rep des images vide
-!images/
-
 # variables d'environnement
 .env
