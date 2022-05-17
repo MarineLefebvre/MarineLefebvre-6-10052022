@@ -104,4 +104,7 @@ dist
 .tern-port
 
 # images
-.images/
+images/*
+
+# variables d'environnement
+.env
