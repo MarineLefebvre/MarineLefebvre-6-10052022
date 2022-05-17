@@ -5,7 +5,6 @@ const path = require('path');
 
 //utilisation des vaiables d'environnements
 require('dotenv').config();
-console.log(process.env);
 
 const sauceRoute = require('./routes/sauceRoute');
 const userRoutes = require('./routes/userRoute');
