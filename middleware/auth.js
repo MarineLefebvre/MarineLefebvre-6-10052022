@@ -1,5 +1,9 @@
 const jwt = require('jsonwebtoken');
 
+//permet de générer un tocken d'authentification reconnu par le site, ce token permet à l'utilisateur de naviguer
+//ce qui empeche par exemple d'accéder au listing des sauces sans être connecté
+//si l'utilisateur n'est pas connecté et qu'il se rend à l'adresse : http://localhost:4200/sauces => il sera invité à se connecter
+
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];

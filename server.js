@@ -12,6 +12,7 @@ const normalizePort = val => {
     }
     return false;
 };
+//le port de l'api est celui défini dans les variables d'environnement ou 3000 par défaut
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+//Défini la structure des sauces en bdd
+
 const thingSchema = mongoose.Schema({
     name: { type: String, required: true },
     manufacturer: {type: String, required: true},

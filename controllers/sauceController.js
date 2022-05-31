@@ -1,7 +1,10 @@
 const Sauce = require('../models/sauceModel');
 const fs = require('fs');
 
+//définition des méthode pour les sauces/interaction avec la BDD
+
 exports.createSauce = (req, res, next) => {
+    //récupérer la sauce dans le body
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     const sauce = new Sauce({
@@ -12,12 +15,16 @@ exports.createSauce = (req, res, next) => {
         usersLiked : [],
         usersDisliked : []
     });
+    //save() permet de sotocker un objet en BDD
     sauce.save()
+        //then() => ce qui est exécuté après la requête API si succès
         .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+        //catch => ce qui est exécuté après la reqête API si erreur
         .catch(error => res.status(400).json({ error }));
 };
 
 exports.getOneSauce = (req, res, next) => {
+    //findOne => récupère un élément qui correspond au param, ici l'id de la sauce
     Sauce.findOne({
         _id: req.params.id
     }).then(
@@ -39,16 +46,19 @@ exports.modifySauce = (req, res, next) => {
             ...JSON.parse(req.body.sauce),
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
+    //updateOne => mise à jour de l'élement qui a le param passé, ici l'id de la sauce
     Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Objet modifié !'}))
         .catch(error => res.status(400).json({ error }));
 };
 
 exports.deleteSauce = (req, res, next) => {
+    console.log(req);
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             const filename = sauce.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
+                //deleteOne => supprimer l'element qui a le param, ici l'id de la sauce
                 Sauce.deleteOne({ _id: req.params.id })
                     .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
                     .catch(error => res.status(400).json({ error }));
@@ -60,6 +70,7 @@ exports.deleteSauce = (req, res, next) => {
 
 
 exports.getAll = (req, res, next) => {
+    //find => récupère tout en BDD
     Sauce.find().then(
         (sauces) => {
             res.status(200).json(sauces);
