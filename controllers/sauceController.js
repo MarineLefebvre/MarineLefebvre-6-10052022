@@ -41,19 +41,27 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
-    const sauceObject = req.file ?
-        {
-            ...JSON.parse(req.body.sauce),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...req.body };
-    //updateOne => mise à jour de l'élement qui a le param passé, ici l'id de la sauce
-    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet modifié !'}))
-        .catch(error => res.status(400).json({ error }));
+    //On recherche la sauce pour supprimer l'image correspondante
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images/')[1];
+            //on supprime l'image
+            fs.unlink(`images/${filename}`, () => {
+                const sauceObject = req.file ?
+                    {
+                        ...JSON.parse(req.body.sauce),
+                        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                    } : { ...req.body };
+                //updateOne => mise à jour de l'élement qui a le param passé, ici l'id de la sauce et l'userId
+                Sauce.updateOne({ _id: req.params.id, userId : sauceObject.userId}, { ...sauceObject, _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+                    .catch(error => res.status(400).json({ error }));
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
 };
 
 exports.deleteSauce = (req, res, next) => {
-    console.log(req);
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             const filename = sauce.imageUrl.split('/images/')[1];
